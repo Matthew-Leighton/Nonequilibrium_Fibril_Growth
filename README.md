@@ -1,1 +1,1 @@
-# Nonequilibrium_Fibril_Growth
+# Nonequilibrium Fibril Growth
