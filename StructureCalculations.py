@@ -10,7 +10,7 @@ import matplotlib.cm as cmap
 from matplotlib.widgets import Slider, Button, RadioButtons
 
 def F(psi,gr,K,Lambda,delta,eta):
-    return np.abs(gr - (1/2)*np.sin(2*psi) - K*np.tan(2*psi)*np.sin(psi)**2 - Lambda*((4*np.pi**2) - (eta**2) * np.cos(psi)**2)*np.tan(2*psi)*delta*(eta*gr)**2)
+    return np.abs(gr - (1/2)*np.sin(2*psi) - K*np.tan(2*psi)*np.sin(psi)**2 - Lambda*((4*np.pi**2) - (eta**2) * np.cos(psi)**2)*np.tan(2*psi)*(delta*eta*gr)**2)
 
 def psifunction(gr,K,deltalist,etalist,Lambda):
     psilist=np.zeros(len(gr))
@@ -53,7 +53,7 @@ def CalculateStructure(gr,K,Lambda,omega):
 
 			etalist[i] = np.sqrt(4*(np.pi**2)*quadint2/quadint4)
 			deltalist[i] =  ( 1 - (8*np.pi**4 * Lambda/omega) + (4*np.pi**2 * (Lambda/omega)*(1/(gr[i]**2))*etalist[i]**2 * quadint2) )#**(1/2)
-			#deltalist[i]= m.sqrt(deltalist[i])
+			deltalist[i]= np.sqrt(max(deltalist[i],0))
 
 	return psi,etalist,deltalist
 
@@ -157,12 +157,18 @@ def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
 
 
 def PlotMolecularStrain(gr,psi,etalist):
-	molecularstrain = (2*np.pi/etalist - np.cos(psi))/np.cos(psi)
-	plt.plot(gr,molecularstrain*100)
+	molecularstrain = ((2*np.pi/etalist[25] - np.cos(psi))/np.cos(psi))[:26]
+	molecularstrain2 = ((2*np.pi/etalist[49] - np.cos(psi))/np.cos(psi))[:50]
+	molecularstrain3 = ((2*np.pi/etalist[75] - np.cos(psi))/np.cos(psi))[:76]
+	molecularstrain4 = ((2*np.pi/etalist[-1] - np.cos(psi))/np.cos(psi))
+	plt.plot(gr[:26],molecularstrain*100,label='$R = $'+str(round(gr[20],3)),linestyle=':')
+	plt.plot(gr[:50],molecularstrain2*100,label='$R = $'+str(round(gr[49],3)),linestyle='-.')
+	plt.plot(gr[:76],molecularstrain3*100,label='$R = $'+str(round(gr[75],3)),linestyle='--')
+	plt.plot(gr,molecularstrain4*100,label='$R = $'+str(round(gr[-1],3)))
 	plt.xlabel('r',fontsize=14)
 	plt.ylabel('Molecular Strain (%)',fontsize=14)
 	plt.xscale('log')
-	#plt.legend(loc='best')
+	plt.legend(loc='best')
 
 	plt.show()
 
