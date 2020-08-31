@@ -195,18 +195,28 @@ def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
 
 
 
-def PlotMolecularStrain(gr,psi,etalist):
+def PlotMolecularStrain(gr,psi,etalist,deltalist):
 
 	molecularstrain = ((2*np.pi/etalist[-1] - np.cos(psi))/np.cos(psi))
 	molecularstrainsmall = ((2*np.pi/etalist[330] - np.cos(psi[:330]))/np.cos(psi[:330]))
 
-	plt.plot(gr,molecularstrain*100,label='$R \gg R_0$')
-	plt.plot(gr[:330],molecularstrainsmall*100,label='$R \ll R_0$')
+	plt.plot(gr,molecularstrain*100,label='$R \gg R_0$',lw=3,color='blue')
+	plt.plot(gr[:330],molecularstrainsmall*100,label='$R \ll R_0$',lw=3,color='orange',ls='-.')
 
-	plt.xlabel('r',fontsize=14)
-	plt.ylabel('Molecular Strain (%)',fontsize=14)
+	plt.xlabel('$r$',fontsize=20)
+	plt.ylabel('Molecular Strain (\%)',fontsize=20)
 	plt.xscale('log')
-	plt.legend(loc='best')
+	plt.xlim(0.01,1100)
+	plt.ylim(-1.0,0.2)
+	plt.scatter(1000,molecularstrain[-1]*100,marker='o',s=300,color='blue')
+	plt.scatter(gr[330],molecularstrainsmall[-1]*100,marker='o',s=300,color='orange')
+	plt.vlines(gr[np.where(deltalist == min(deltalist))], -1.5,1,label='$R_0$',color='red',linestyle='--',lw=2)
+
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=14)
+	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+	plt.legend(loc='best',fontsize=20)
 
 	plt.show()
 
