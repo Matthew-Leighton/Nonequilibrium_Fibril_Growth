@@ -113,113 +113,6 @@ def FreeEnergy_NoD(gr,K,psi,gamma):
 
 
 
-def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
-
-	psi_noD = psi0function(gr,K)
-	f_noD = FreeEnergy_NoD(gr,K,psi_noD,gamma)
-
-	fig=plt.figure()
-	gs=gridspec.GridSpec(2,2,width_ratios=[1,1],height_ratios=[1,1])
-	#,wspace =0.8,top=0.7,bottom=0.3,left=0.1,right=0.9)
-
-	ax1=plt.subplot(gs[0])
-	ax2=plt.subplot(gs[1])
-	ax3=plt.subplot(gs[2])
-	ax4=plt.subplot(gs[3])
-
-	ax1.minorticks_on()
-	ax2.minorticks_on()
-	ax3.minorticks_on()
-	ax4.minorticks_on()
-
-	ax1.plot(gr, psi,label='Full Solution', lw=3)
-	ax1.plot(gr,psi_noD,lw=2,label='$\Lambda=0$',linestyle='--')
-	ax1.tick_params(axis='x', labelsize=14)
-	ax1.tick_params(axis='y', labelsize=14)
-	#ax1.set_xlabel('$r$')
-	ax1.set_ylabel('$\psi$',fontsize=20)
-	ax1.set_xscale('log')
-	ax1.set_yscale('log')
-	ax1.set_xlabel('$r$',fontsize=20)
-	ax1.set_ylim(0.008,np.pi/4+0.1)
-	ax1.set_xlim(0.01,1000)
-	ax1.vlines(gr[np.where(deltalist == min(deltalist))], 0.007,np.pi/4+1,label='$R_0$',color='red',linestyle='--')
-	ax1.set_title('A)',loc='left',fontsize=16)
-	ax1.hlines(psi[-1],0.001,10000,linestyle=':',color='blue')#,label='$\psi_\infty$'
-	ax1.hlines(np.pi/4,0.001,10000,linestyle=':',color='orange')#,label='$\pi/4$'
-	ax1.text(0.02,0.07,'$\psi_\infty$',color='blue',fontsize=14)
-	ax1.text(0.02,0.45,'$\pi/2$',color='orange',fontsize=14)
-	ax1.legend(loc='best',fontsize=12)
-
-	ax2.plot(gr,deltalist, lw=3)
-	ax2.set_xscale('log')
-	ax2.set_ylabel('$\delta$',fontsize=20)
-	ax2.set_xlabel('$r$',fontsize=20)
-	#ax2.set_xlabel('$r$')
-	ax2.set_xlim(0.01,1000)
-	ax2.set_title('B)',loc='left',fontsize=16)
-	ax2.vlines(gr[np.where(deltalist == min(deltalist))], 0.95,1.01,label='$R_0$',color='red',linestyle='--')
-	ax2.set_ylim(0.984,1.0006)
-	ax2.tick_params(axis='x', labelsize=14)
-	ax2.tick_params(axis='y', labelsize=14)
-
-	ax3.plot(gr,2*np.pi/etalist, lw=3)
-	ax3.set_xscale('log')
-	ax3.set_ylabel('$2\pi/\eta$',fontsize=20)
-	ax3.set_xlabel('$r$',fontsize=20)
-	ax3.set_ylim(0.99,1.0002)
-	ax3.set_xlim(0.01,1000)
-	ax3.vlines(gr[np.where(deltalist == min(deltalist))], 0.99,1.0005,label='$R_0$',color='red',linestyle='--')
-	#ax3.set_ylim(,1.01)
-	ax3.set_title('C)',loc='left',fontsize=16)
-	ax3.tick_params(axis='x', labelsize=14)
-	ax3.tick_params(axis='y', labelsize=14)
-
-	ax4.plot(gr, f, lw=3,label='Full Solution')
-	ax4.plot(gr,f_noD,lw=2,label='$\delta=0$ Solution',linestyle='--')
-	ax4.set_xscale('log')
-	ax4.set_ylabel('$f$',fontsize=20)
-	ax4.set_xlabel('$r$',fontsize=20)
-	ax4.vlines(gr[np.where(deltalist == min(deltalist))], -0.4,0.6,label='$R_0$',color='red',linestyle='--')
-	ax4.set_ylim(-0.35,0.55)
-	ax4.set_xlim(0.01,1000)
-	#ax4.legend(loc='best')
-	ax4.set_title('D)',loc='left',fontsize=16)
-	ax4.tick_params(axis='x', labelsize=14)
-	ax4.tick_params(axis='y', labelsize=14)
-
-
-	plt.tight_layout(pad=0.5)
-
-	plt.show()
-
-
-
-def PlotMolecularStrain(gr,psi,etalist,deltalist):
-
-	molecularstrain = ((2*np.pi/etalist[-1] - np.cos(psi))/np.cos(psi))
-	molecularstrainsmall = ((2*np.pi/etalist[330] - np.cos(psi[:330]))/np.cos(psi[:330]))
-
-	plt.plot(gr,molecularstrain*100,label='$R \gg R_0$',lw=3,color='blue')
-	plt.plot(gr[:330],molecularstrainsmall*100,label='$R \ll R_0$',lw=3,color='orange',ls='-.')
-
-	plt.xlabel('$r$',fontsize=20)
-	plt.ylabel('Molecular Strain (\%)',fontsize=20)
-	plt.xscale('log')
-	plt.xlim(0.01,1100)
-	plt.ylim(-1.0,0.2)
-	plt.scatter(1000,molecularstrain[-1]*100,marker='o',s=300,color='blue')
-	plt.scatter(gr[330],molecularstrainsmall[-1]*100,marker='o',s=300,color='orange')
-	plt.vlines(gr[np.where(deltalist == min(deltalist))], -1.5,1,label='$R_0$',color='red',linestyle='--',lw=2)
-
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-	plt.legend(loc='best',fontsize=20)
-
-	plt.show()
-
 def MolecularStrainCrossSection(gr,psi,etalist):
 	#gr = gr[:200]
 	#psi=psi[:200]
@@ -270,75 +163,67 @@ def MolecularStrainCrossSectionSmall(gr,psi,etalist):
 	plt.show()
 
 
-def PlotFEDensity(gr,f):
-	plt.plot(gr, f, lw=3,zorder=0,label = '$f(r)$')
-	plt.hlines(-0.15,0.01,1000,linestyle='--',color='red',lw = 2,zorder=1,label = '$n_f\cdot \mu$')
-	plt.scatter(0.85,-0.148,marker='*',color='red',s=300,zorder=2)
-	plt.scatter(10,-0.01,marker=11,color='red',s=300,zorder=3)
-	plt.vlines(0.75,-0.4,-0.29,linestyle=':',color='red',zorder=4)
-	plt.scatter(0.75,-0.265,marker='$R_0$',color='red',s=300,zorder=4)
-	#plt.scatter(45,-0.11,marker='$\mu$',color='red',s=400,zorder=5)
-	plt.xscale('log')
-	plt.xlabel('$r$',fontsize=20)
-	plt.ylabel('$f$',fontsize=20)
-	plt.xlim(0.01,62)
-	plt.ylim(-0.35,0.5)
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-	plt.legend(loc='best',fontsize=20)
 
-	plt.show()
+def CalculateStructure_2(gr,K,Lambda,omega):
+	N = len(gr)
 
+	psi=np.zeros(N)
+	etalist=np.zeros(N)
+	deltalist=np.ones(N)
 
+	for i in range(N):
+		if i==0:
+			psi[i] = gr[i]
+			quadint2 = (gr[i])*(gr[i]*np.cos(psi[i])**2)/2
+			quadint4 = (gr[i])*(gr[i]*np.cos(psi[i])**4)/2
+		else:
+			psi[i] = minimize(F,psi[i-1],args=(gr[i],K,Lambda,deltalist[i-1],etalist[i-1])).x
+			quadint2 += (gr[i]-gr[i-1]) * (gr[i]*np.cos(psi[i])**2 + gr[i-1]*np.cos(psi[i-1])**2)/2
+			quadint4 += (gr[i]-gr[i-1]) * (gr[i]*np.cos(psi[i])**4 + gr[i-1]*np.cos(psi[i-1])**4)/2
+			etalist[i] = np.sqrt(4*(np.pi**2)*quadint2/quadint4)
+			deltalist[i] =  ( 1 - (8*np.pi**4 * Lambda/omega) + (4*np.pi**2 * (Lambda/omega)*(1/(gr[i]**2))*etalist[i]**2 * quadint2) )
+			deltalist[i] = np.sqrt(deltalist[i])
 
-def PlotPsiInftyMap():
-	#Needs to run in KLambdaParamScanData
-	N=1000
-	n=10
-
-	Klist=np.logspace(0,3,num=n)
-	Lambdalist=np.logspace(-3,2,num=n)
-	finaltwist = np.zeros((n,n))
-
-	for j in range(n):
-	    for i in range(n):
-	        psi = np.loadtxt('Psi_'+str(j)+'_'+str(i)+'.csv')
-	        
-	        gr = np.logspace(-2,3,num=len(psi))
-	        
-	        if np.where(psi == max(psi))[0][0]<len(psi)-1:
-	            finaltwist[i,j]=np.NaN
-	        else:
-	            finaltwist[i,j] = psi[-1]
-	        
-	finaltwist[2,0] = 0.42
-
-	#plt.imshow(finaltwist,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5,interpolation='gaussian')
-	plt.xlabel('$\log_{10} K$',fontsize=20)
-	plt.ylabel('$\log_{10}\Lambda$',fontsize=20)
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.06,0.16,0.24,0.31,0.4,0.48,0.56],colors='k')
-	plt.clabel(CS, inline=1, fontsize=12)
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.09],colors='k')
-	plt.clabel(CS,fmt='Tendon', inline=1, fontsize=16)
-
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.08,0.1],alpha=0.5,colors='blue')
-	plt.text(0.35,-1.8,'Cornea',color='black',fontsize=16)
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.1,0.31],alpha=0.1,colors='grey')
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.08],alpha=0.1,colors='grey')
-
-	#CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31],colors='k')
-	#plt.clabel(CS,fmt='Cornea', inline=1, fontsize=12)
-
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-
-	plt.show()
+	return psi,etalist,deltalist
 
 
+def ComputeData(gr):
+	N = 40
+	Klist = np.logspace(0,3,num=N)
+	Lambdalist = np.logspace(-3,2,num=N)
+	omega=0.1
+	gamma=0.01
+
+	for i in range(N):
+		for j in range(N):
+			print(i)
+			print(j)
+
+			psi,etalist,deltalist = CalculateStructure_2(gr,Klist[i],Lambdalist[j],omega)
+			f,fK,fLambda,fomega,fgamma = CalculateFreeEnergy(gr,Klist[i],Lambdalist[j],omega,gamma,psi,deltalist,etalist)
+
+			np.savetxt('Psi_'+str(i)+'_'+str(j)+'.csv',psi,delimiter=',')
+			np.savetxt('Eta_'+str(i)+'_'+str(j)+'.csv',etalist,delimiter=',') 
+			np.savetxt('Delta_'+str(i)+'_'+str(j)+'.csv',deltalist,delimiter=',') 
+			np.savetxt('f_'+str(i)+'_'+str(j)+'.csv',f,delimiter=',') 
+
+
+def ComputeData_Concentration(gr):
+	N = 20
+	Klist = np.logspace(0,2.5,num=N)
+	Lambdalist = np.logspace(-3,-1,num=N)
+	omega=0.1
+	gamma=0.01
+
+	for i in range(N):
+		for j in range(N):
+			print(i)
+			print(j)
+
+			psi,etalist,deltalist = CalculateStructure_2(gr,Klist[i],Lambdalist[j],omega)
+			f,fK,fLambda,fomega,fgamma = CalculateFreeEnergy(gr,Klist[i],Lambdalist[j],omega,gamma,psi,deltalist,etalist)
+
+			np.savetxt('Psi_'+str(i)+'_'+str(j)+'.csv',psi,delimiter=',')
+			np.savetxt('Eta_'+str(i)+'_'+str(j)+'.csv',etalist,delimiter=',') 
+			np.savetxt('Delta_'+str(i)+'_'+str(j)+'.csv',deltalist,delimiter=',') 
+			np.savetxt('f_'+str(i)+'_'+str(j)+'.csv',f,delimiter=',') 
