@@ -31,7 +31,7 @@ def psi0function(gr,K):
   
     return psilist
 
-def FreeEnergy_NoD(gr,K,psi,gamma):
+def FreeEnergy_NoD(gr,K,psi,gamma,omega):
     N=len(gr)
 
     fgamma = np.zeros(N)
@@ -40,9 +40,22 @@ def FreeEnergy_NoD(gr,K,psi,gamma):
     fgamma = gamma/gr
     for i in range(N):
         fK[i] = (1/2)*(np.sin(2*psi[i])/(2*gr[i]))**2 -(np.sin(2*psi[i])/(2*gr[i])) + (1/2)*K*((np.sin(psi[i])**4)/(gr[i]**2))
-    f = fgamma + fK
+    f = fgamma + fK + -omega/2
     
     return f
+
+def eta0function(gr,psi):
+	etalist = np.zeros(len(gr))
+	for i in range(len(gr)):
+		if i==0:
+			quadint2 = (gr[i])*(gr[i]*np.cos(psi[i])**2)/2
+			quadint4 = (gr[i])*(gr[i]*np.cos(psi[i])**4)/2
+		else:
+			quadint2 += (gr[i]-gr[i-1]) * (gr[i]*np.cos(psi[i])**2 + gr[i-1]*np.cos(psi[i-1])**2)/2
+			quadint4 += (gr[i]-gr[i-1]) * (gr[i]*np.cos(psi[i])**4 + gr[i-1]*np.cos(psi[i-1])**4)/2
+
+		etalist[i] = np.sqrt(4*(np.pi**2)*quadint2/quadint4)
+	return etalist
 
 
 
@@ -65,7 +78,8 @@ f=np.loadtxt('F.csv')
 def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
 
 	psi_noD = psi0function(gr,K)
-	f_noD = FreeEnergy_NoD(gr,K,psi_noD,gamma)
+	f_noD = FreeEnergy_NoD(gr,K,psi_noD,gamma,omega)
+	eta_noD = eta0function(gr,psi_noD)
 
 	fig=plt.figure()
 	gs=gridspec.GridSpec(2,2,width_ratios=[1,1],height_ratios=[1,1])
@@ -102,6 +116,7 @@ def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
 	ax1.legend(loc='best',fontsize=14)
 
 	ax2.plot(gr,deltalist, lw=3)
+	ax2.plot(gr,np.ones(len(gr)),lw=2,linestyle='--')
 	ax2.set_xscale('log')
 	ax2.set_ylabel('$\delta$',fontsize=20)
 	ax2.set_xlabel('$r$',fontsize=20)
@@ -116,6 +131,7 @@ def PlotData(gr,K,Lambda,omega,gamma,psi,deltalist,etalist,f):
 	ax2.tick_params(axis='y', labelsize=14)
 
 	ax3.plot(gr,2*np.pi/etalist, lw=3)
+	ax3.plot(gr,2*np.pi/eta_noD,lw=2,linestyle='--')
 	ax3.set_xscale('log')
 	ax3.set_ylabel('$2\pi/\eta$',fontsize=20)
 	ax3.set_xlabel('$r$',fontsize=20)

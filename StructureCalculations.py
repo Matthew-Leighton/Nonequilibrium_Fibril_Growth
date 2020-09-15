@@ -227,3 +227,25 @@ def ComputeData_Concentration(gr):
 			np.savetxt('Eta_'+str(i)+'_'+str(j)+'.csv',etalist,delimiter=',') 
 			np.savetxt('Delta_'+str(i)+'_'+str(j)+'.csv',deltalist,delimiter=',') 
 			np.savetxt('f_'+str(i)+'_'+str(j)+'.csv',f,delimiter=',') 
+
+
+
+def ComputeData_Omega(gr):
+	N = 30
+	omegalist = np.logspace(-2,0,num=N)
+	Lambdalist = np.logspace(-3,2,num=N)
+	K=10
+	gamma=0.01
+
+	for i in range(N):
+		for j in range(N):
+			print(i)
+			print(j)
+
+			psi,etalist,deltalist = CalculateStructure_2(gr,K,Lambdalist[j],omegalist[i])
+			#f,fK,fLambda,fomega,fgamma = CalculateFreeEnergy(gr,Klist[i],Lambdalist[j],omega,gamma,psi,deltalist,etalist)
+
+			np.savetxt('Psi_'+str(i)+'_'+str(j)+'.csv',psi,delimiter=',')
+			np.savetxt('Eta_'+str(i)+'_'+str(j)+'.csv',etalist,delimiter=',') 
+			np.savetxt('Delta_'+str(i)+'_'+str(j)+'.csv',deltalist,delimiter=',') 
+			#np.savetxt('f_'+str(i)+'_'+str(j)+'.csv',f,delimiter=',')

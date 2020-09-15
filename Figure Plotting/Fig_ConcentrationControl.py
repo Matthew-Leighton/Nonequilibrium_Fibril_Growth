@@ -94,12 +94,12 @@ gr = np.logspace(-2,3,num=1000)
 
 #####Data Analysis Part 1
 N=1000
-n=10
+n=20
 
-Klist=np.logspace(0,3,num=n)
-Lambdalist=np.logspace(-3,2,num=n)
+Klist=np.logspace(0,2.5,num=n)
+Lambdalist=np.logspace(-3,-1,num=n)
 
-gamma = 0.001
+gamma = 0.01
 
 r0 = np.zeros((n,n))
 finaltwist = np.zeros((n,n))
@@ -161,15 +161,15 @@ for j in range(n):
             fprime_r0[i,j] = fprime[r0loc]
             rmax[i,j] = gr[rmaxloc]
 
-    finaltwist[2,0] = 0.42
-    r0[2,0] = 0.8
+    #finaltwist[2,0] = 0.42
+    #r0[2,0] = 0.8
 
 
 #####Data Analysis Part 2
 
 #fprime_rc = ndimage.filters.gaussian_filter(fprime_rc,1)
 #R_C = ndimage.filters.gaussian_filter(R_C,1)
-n=10
+n=20
 
 k_24_lower = np.zeros((n,n))
 k_24_upper = np.zeros((n,n))
@@ -197,11 +197,17 @@ beta_inverse_upper = nupper*kBT*(1-k_24_lower) / ( K22_lower * (qlower**2) * (1+
 deltar_r_lower = beta_inverse_lower / (fprime_rc *R_C)
 deltar_r_upper = beta_inverse_upper / (fprime_rc *R_C)
 
-maxdeltanovern = 0.05 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
+
+
+#maxdeltanovern = 0.05 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
+maxdeltanovern = 0.16 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
+
+maxdeltanovern_justdeltar = (10/40)*R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
 
 
 
 #####Data Analysis Part 3
+'''
 M=100
 array2 = maxdeltanovern
 for i in range(n):
@@ -212,7 +218,7 @@ array2 = ndimage.filters.gaussian_filter(array2,0.1)
 bettercontroldata = ndimage.zoom(array2, M)
 betterKdata = ndimage.zoom(Klist, M)
 betterLambdadata = ndimage.zoom(Lambdalist, M)
-blurredr0 = ndimage.filters.gaussian_filter(r0,0.2)
+blurredr0 = ndimage.filters.gaussian_filter(r0,0.2)'''
 
 
 # Plot Concentration Control Figure:
@@ -284,33 +290,70 @@ def PlotConcentrationControl():
 
 
 
+def PlotConcentrationControl():
+	#plt.imshow(maxdeltanovern,cmap=cmap.autumn,origin='lower',extent=[1,10**2.5,0.001,0.1],aspect=0.8,interpolation='gaussian')
+	plt.xlabel('$K$',fontsize=20)
+	plt.ylabel('$\Lambda$',fontsize=20)
+	plt.xscale('log')
+	plt.yscale('log')
+	#plt.title("max{$\Delta n/n$}",fontsize=20)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	plt.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -38)
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+	CS = plt.contour(Klist,Lambdalist,maxdeltanovern)#,[0.05,0.12,0.16,0.2,0.23],colors='k')
+	plt.clabel(CS, inline=1, fontsize=20)
+
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=14)
+	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+
+
 # Plot k24 Bounds:
 def K24Bounds():
 	fig=plt.figure()
-	gs=gridspec.GridSpec(1,2,width_ratios=[1,1],height_ratios=[1],wspace=0.5,bottom=0.1,top=0.95,right=0.9,left=0.15)
+	gs=gridspec.GridSpec(2,1,width_ratios=[1],height_ratios=[1,1])
 
 	ax1=plt.subplot(gs[0])
 	ax2=plt.subplot(gs[1])
 
-	ax1.imshow(k_24_lower,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
-	ax1.set_xlabel('$\log_{10} K$',fontsize=20)
-	ax1.set_ylabel('$\log_{10}\Lambda$',fontsize=20)
+	#ax1.imshow(k_24_lower,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
+	ax1.set_xlabel('$ K$',fontsize=20)
+	ax1.set_ylabel('$\Lambda$',fontsize=20)
 	ax1.set_title("min\{$k_{24}$\}",fontsize=20)
+	ax1.set_xscale('log')
+	ax1.set_yscale('log')
 
-	CS = ax1.contour(np.log10(Klist),np.log10(Lambdalist),k_24_lower)#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
+	CS = ax1.contour(Klist,Lambdalist,k_24_lower,colors='k')#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
 	ax1.clabel(CS, inline=1, fontsize=14)
+
+	CS = ax1.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	ax1.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -20)
+	ax1.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
 
 	ax1.minorticks_on()
 	ax1.tick_params(axis='x', labelsize=14)
 	ax1.tick_params(axis='y', labelsize=14)
 
-	ax2.imshow(k_24_upper,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
-	ax2.set_xlabel('$\log_{10} K$',fontsize=20)
-	ax2.set_ylabel('$\log_{10}\Lambda$',fontsize=20)
+	#ax2.imshow(k_24_upper,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
+	ax2.set_xlabel('$ K$',fontsize=20)
+	ax2.set_ylabel('$\Lambda$',fontsize=20)
 	ax2.set_title("max\{$k_{24}$\}",fontsize=20)
+	ax2.set_xscale('log')
+	ax2.set_yscale('log')
 
-	CS = ax2.contour(np.log10(Klist),np.log10(Lambdalist),k_24_upper)#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
+	CS = ax2.contour(Klist,Lambdalist,k_24_upper,colors='k')#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
 	ax2.clabel(CS, inline=1, fontsize=14)
+
+	CS = ax2.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	ax2.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -20)
+	ax2.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
 
 	ax2.minorticks_on()
 	ax2.tick_params(axis='x', labelsize=14)
@@ -339,6 +382,54 @@ def R_0Figure():
 
 	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),blurredr0,[0.15,0.5,1,5,10,20],colors='k')
 	plt.clabel(CS, inline=1, fontsize=14)
+
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=14)
+	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+
+
+def Plot_RC_over_R0():
+	#plt.imshow(maxdeltanovern,cmap=cmap.autumn,origin='lower',extent=[1,10**2.5,0.001,0.1],aspect=0.8,interpolation='gaussian')
+	plt.xlabel('$K$',fontsize=20)
+	plt.ylabel('$\Lambda$',fontsize=20)
+	plt.xscale('log')
+	plt.yscale('log')
+	#plt.title("max{$\Delta n/n$}",fontsize=20)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	plt.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -38)
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+	CS = plt.contour(Klist,Lambdalist,R_C/r0,[0.1,0.2,0.5,1,2,5],colors='k')
+	plt.clabel(CS, inline=1, fontsize=20)
+
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=14)
+	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+
+
+def PlotConcentrationControl_justdeltar():
+	#plt.imshow(maxdeltanovern,cmap=cmap.autumn,origin='lower',extent=[1,10**2.5,0.001,0.1],aspect=0.8,interpolation='gaussian')
+	plt.xlabel('$K$',fontsize=20)
+	plt.ylabel('$\Lambda$',fontsize=20)
+	plt.xscale('log')
+	plt.yscale('log')
+	#plt.title("max{$\Delta n/n$}",fontsize=20)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	plt.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -38)
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+	CS = plt.contour(Klist,Lambdalist,maxdeltanovern_justdeltar)#,[0.05,0.12,0.16,0.2,0.23],colors='k')
+	plt.clabel(CS, inline=1, fontsize=20)
 
 	plt.minorticks_on()
 	plt.tick_params(axis='x', labelsize=14)

@@ -98,39 +98,57 @@ def PlotPsiInftyMap():
 	plt.show()
 
 
+
+def PlotPsiInftyMap():
+	#Needs to run in KLambdaParamScanData
+	N=1000
+	n=40
+
+	Klist=np.logspace(0,3,num=n)
+	Lambdalist=np.logspace(-3,2,num=n)
+	finaltwist = np.zeros((n,n))
+
+	for j in range(n):
+	    for i in range(n):
+	        psi = np.loadtxt('Psi_'+str(j)+'_'+str(i)+'.csv')
+	        
+	        gr = np.logspace(-2,2,num=len(psi))
+	        
+	        if np.where(psi == max(psi))[0][0]<len(psi)-1:
+	            finaltwist[i,j]=np.NaN
+	        else:
+	            finaltwist[i,j] = psi[-1]
+
+
+	plt.ylim(0.001,100)
+	plt.xlim(1,1000)
+	plt.xscale('log')
+	plt.yscale('log') 
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.06,0.16,0.24,0.4,0.48,0.56],colors='k')
+	plt.clabel(CS, inline=1, fontsize=12)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.09],colors='blue',linewidths=10,alpha=0.5)
+	plt.clabel(CS,fmt='Tendon (0.09)', inline=1, fontsize=16)
+
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,1],alpha=0.5,colors='orange')
+	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.08,0.1],alpha=0.5,colors='blue')
+	#plt.text(0.35,-1.8,'Cornea',color='black',fontsize=16)
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.01,0.31],alpha=0.1,colors='grey')
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=10)
+	plt.clabel(CS,fmt='Cornea (0.31)', inline=1, fontsize=16)
+	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.08],alpha=0.1,colors='grey')
+	
+	plt.xlabel('$K$')
+	plt.ylabel('$\Lambda$')
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=14)
+	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+
 PlotPsiInftyMap()
 
 
-
-
-plt.ylim(0.001,100)
-plt.xlim(1,1000)
-plt.ylabel('$\Lambda$',fontsize=20)
-plt.xlabel('$K$',fontsize=20)
-plt.xscale('log')
-plt.yscale('log')
-plt.minorticks_on()
-plt.tick_params(axis='x', labelsize=14)
-plt.tick_params(axis='y', labelsize=14)
-plt.tight_layout(pad=0.5)
-
-plt.xscale('lin')
-plt.yscale('lin')
-CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.06,0.16,0.24,0.4,0.48,0.56],colors='k')
-plt.clabel(CS, inline=1, fontsize=12)
-
-CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.09],colors='blue',linewidths=15,alpha=0.5)
-plt.clabel(CS,fmt='Tendon (0.09)', inline=1, fontsize=16)
-
-plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31,0.7],alpha=0.2,colors='orange')
-#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.08,0.1],alpha=0.5,colors='blue')
-#plt.text(0.35,-1.8,'Cornea',color='black',fontsize=16)
-plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.31],alpha=0.1,colors='grey')
-
-CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31],colors='xkcd:orange')
-plt.clabel(CS,fmt='Cornea (0.31)', inline=1, fontsize=16)
-
-
-
-plt.show()
 
