@@ -325,7 +325,7 @@ def K24Bounds():
 	#ax1.imshow(k_24_lower,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
 	ax1.set_xlabel('$ K$',fontsize=20)
 	ax1.set_ylabel('$\Lambda$',fontsize=20)
-	ax1.set_title("min\{$k_{24}$\}",fontsize=20)
+	ax1.set_title("$k_{24}^{min}$",fontsize=20)
 	ax1.set_xscale('log')
 	ax1.set_yscale('log')
 
@@ -333,18 +333,18 @@ def K24Bounds():
 	ax1.clabel(CS, inline=1, fontsize=14)
 
 	CS = ax1.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
-	ax1.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -20)
+	ax1.text(40,0.0009,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -19)
 	ax1.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
 
 
 	ax1.minorticks_on()
-	ax1.tick_params(axis='x', labelsize=14)
-	ax1.tick_params(axis='y', labelsize=14)
+	ax1.tick_params(axis='x', labelsize=16)
+	ax1.tick_params(axis='y', labelsize=16)
 
 	#ax2.imshow(k_24_upper,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
 	ax2.set_xlabel('$ K$',fontsize=20)
 	ax2.set_ylabel('$\Lambda$',fontsize=20)
-	ax2.set_title("max\{$k_{24}$\}",fontsize=20)
+	ax2.set_title("$k_{24}^{max}$",fontsize=20)
 	ax2.set_xscale('log')
 	ax2.set_yscale('log')
 
@@ -352,12 +352,12 @@ def K24Bounds():
 	ax2.clabel(CS, inline=1, fontsize=14)
 
 	CS = ax2.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
-	ax2.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -20)
+	ax2.text(40,0.0009,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -19)
 	ax2.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
 
 	ax2.minorticks_on()
-	ax2.tick_params(axis='x', labelsize=14)
-	ax2.tick_params(axis='y', labelsize=14)
+	ax2.tick_params(axis='x', labelsize=16)
+	ax2.tick_params(axis='y', labelsize=16)
 	plt.tight_layout(pad=0.5)
 
 	plt.show()

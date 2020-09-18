@@ -75,8 +75,9 @@ ax2.set_xscale('log')
 ax2.set_yscale('log')
 #ax2.title('Asymptotic $\psi(r)$ ($K=1$)',fontsize=20)
 
-CS = ax2.contour(Lambdalist,Omegalist,finaltwist,colors='k')
+CS = ax2.contour(Lambdalist,Omegalist,finaltwist,[0.1,0.2,0.3,0.4,0.5],colors='k')
 ax2.clabel(CS, inline=1, fontsize=12)
+ax2.contourf(Lambdalist,Omegalist,finaltwist,[0.75,1],alpha=0.5,colors='orange',label='$\psi_\infty>0.75$')
 
 ax2.minorticks_on()
 ax2.tick_params(axis='x', labelsize=14)
@@ -89,8 +90,10 @@ ax3.set_ylabel('$\omega$',fontsize=20)
 ax3.set_xscale('log')
 ax3.set_yscale('log')
 
-CS = ax3.contour(Lambdalist,Omegalist,delta0,[0.01,0.5,0.8,0.9,0.95,0.99],colors='k')
+CS = ax3.contour(Lambdalist,Omegalist,delta0,[0,0.8,0.9,0.95,0.99],colors='k')
 ax3.clabel(CS, inline=1, fontsize=12)
+ax3.contourf(Lambdalist,Omegalist,delta0,[0,0.01],alpha=0.5,colors='orange')
+
 ax3.minorticks_on()
 ax3.tick_params(axis='x', labelsize=14)
 ax3.tick_params(axis='y', labelsize=14)
