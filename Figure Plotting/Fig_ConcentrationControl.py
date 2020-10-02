@@ -221,73 +221,6 @@ betterLambdadata = ndimage.zoom(Lambdalist, M)
 blurredr0 = ndimage.filters.gaussian_filter(r0,0.2)'''
 
 
-# Plot Concentration Control Figure:
-def PlotConcentrationControl():
-	#plt.imshow(maxdeltanovern,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5,interpolation='gaussian')
-	plt.xlabel('$\log_{10} K$',fontsize=20)
-	plt.ylabel('$\log_{10}\Lambda$',fontsize=20)
-	#plt.title("max{$\Delta n/n$}",fontsize=20)
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31],colors='black',linewidths=3)
-	plt.clabel(CS,fmt='$\psi_\infty = 0.31$', inline=1, fontsize=16)
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),maxdeltanovern,[0.05,0.1,0.15,0.2],colors='k')
-	plt.clabel(CS, inline=1, fontsize=16)
-
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-
-	plt.show()
-
-
-def PlotConcentrationControl():
-	#plt.imshow(maxdeltanovern,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5,interpolation='gaussian')
-	plt.xlabel('$\log_{10} K$',fontsize=20)
-	plt.ylabel('$\log_{10}\Lambda$',fontsize=20)
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31],colors='black',linewidths=3)
-	plt.clabel(CS,fmt='$\psi_\infty = 0.31$', inline=1, fontsize=16)
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
-
-	CS = plt.contour(np.log10(betterKdata),np.log10(betterLambdadata),bettercontroldata,[0.05,0.1,0.15,0.2],colors='k')
-	plt.clabel(CS, inline=1, fontsize=16)
-
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-
-	plt.show()
-
-
-# Number 3
-def PlotConcentrationControl():
-	plt.imshow(bettercontroldata,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=1.1,interpolation='gaussian')
-	plt.xlabel('$\log_{10} K$',fontsize=20)
-	plt.ylabel('$\log_{10}\Lambda$',fontsize=20)
-	cb = plt.colorbar()
-	cb.ax.tick_params(labelsize=14)
-
-	CS = plt.contour(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31],colors='black',linewidths=3)
-	plt.clabel(CS,fmt='$\psi_\infty = 0.31$', inline=1, fontsize=20)
-	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
-
-	#CS = plt.contour(np.log10(betterKdata),np.log10(betterLambdadata),bettercontroldata,[0.05,0.1,0.15,0.2],colors='k')
-	#plt.clabel(CS, inline=1, fontsize=16)
-	plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.31],colors='white')
-
-	plt.ylim(-3,-1)
-	plt.xlim(0,2.7)
-	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
-	plt.tight_layout(pad=0.5)
-
-	plt.show()
-
 
 
 def PlotConcentrationControl():
@@ -434,6 +367,29 @@ def PlotConcentrationControl_justdeltar():
 	plt.minorticks_on()
 	plt.tick_params(axis='x', labelsize=14)
 	plt.tick_params(axis='y', labelsize=14)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+
+
+def PlotFPrime():
+	plt.xlabel('$K$',fontsize=20)
+	plt.ylabel('$\Lambda$',fontsize=20)
+	plt.xscale('log')
+	plt.yscale('log')
+	#plt.title("max{$\Delta n/n$}",fontsize=20)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	plt.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -38)
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+	CS = plt.contour(Klist,Lambdalist,fprime_rc,[0.001,0.005,0.01,0.02,0.04,0.06,0.08,0.10,0.12],colors='k')
+	plt.clabel(CS, inline=1, fontsize=20)
+
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=16)
+	plt.tick_params(axis='y', labelsize=16)
 	plt.tight_layout(pad=0.5)
 
 	plt.show()
