@@ -37,7 +37,7 @@ f=np.loadtxt('F.csv')
 def PlotFEDensity(gr,f):
 	plt.plot(gr, f, lw=3,zorder=0,label = '$f(R)$')
 	plt.hlines(-0.15,0.01,1000,linestyle='--',color='red',lw = 2,zorder=1,label = '$n_f\cdot \mu$')
-	plt.scatter(0.85,-0.148,marker='*',color='red',s=300,zorder=2)
+	plt.scatter(0.85,-0.148,marker='*',color='red',s=500,zorder=2)
 	#plt.scatter(10,-0.01,marker=11,color='red',s=300,zorder=3)
 	#plt.vlines(0.75,-0.4,-0.29,linestyle=':',color='red',zorder=4)
 	#plt.text(0.6,-0.285,'$R_0$',color='red',fontsize=16,zorder=4)

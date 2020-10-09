@@ -176,7 +176,7 @@ k_24_upper = np.zeros((n,n))
 
 tilde_R_C = 15*10**(-9) # m
 qlower = 1/(10**(-6)) # /m
-qupper = 12*qlower # /m
+qupper = 5*np.pi*qlower # /m
 
 kBT = 4.3 * (10**(-21)) # Joules
 nlower = 2*10**17 # /m^3
@@ -200,7 +200,7 @@ deltar_r_upper = beta_inverse_upper / (fprime_rc *R_C)
 
 
 #maxdeltanovern = 0.05 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
-maxdeltanovern = 0.16 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
+maxdeltanovern = 0.16 * R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_lower) / ( (nf * kBT) * (1-k_24_lower) )
 
 maxdeltanovern_justdeltar = (10/40)*R_C * fprime_rc * K22_upper * (qupper**2) * (1+k_24_upper) / ( (nf * kBT) * (1-k_24_upper) )
 
@@ -317,8 +317,8 @@ def R_0Figure():
 	plt.clabel(CS, inline=1, fontsize=14)
 
 	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
+	plt.tick_params(axis='x', labelsize=16)
+	plt.tick_params(axis='y', labelsize=16)
 	plt.tight_layout(pad=0.5)
 
 	plt.show()
@@ -394,5 +394,56 @@ def PlotFPrime():
 
 	plt.show()
 
+
+def Fig10():
+	fig=plt.figure()
+	gs=gridspec.GridSpec(2,1,width_ratios=[1],height_ratios=[1,1])
+
+	ax1=plt.subplot(gs[0])
+	ax2=plt.subplot(gs[1])
+
+	#ax1.imshow(k_24_lower,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
+	ax1.set_xlabel('$ K$',fontsize=20)
+	ax1.set_ylabel('$\Lambda$',fontsize=20)
+	ax1.set_title("A)",loc='left',fontsize=20)
+	ax1.set_title('$\Delta n/n$',loc='right',fontsize=20)
+	ax1.set_xscale('log')
+	ax1.set_yscale('log')
+
+	CS = ax1.contour(Klist,Lambdalist,maxdeltanovern,[0.04,0.05,0.06,0.07,0.08],colors='k')#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
+	ax1.clabel(CS, inline=1, fontsize=14)
+
+	CS = ax1.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	ax1.text(23,0.007,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -22.5)
+	ax1.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+
+	ax1.minorticks_on()
+	ax1.tick_params(axis='x', labelsize=16)
+	ax1.tick_params(axis='y', labelsize=16)
+
+	#ax2.imshow(k_24_upper,cmap=cmap.autumn,origin='lower',extent=[0,3,-3,2],aspect=3/5)#,interpolation='gaussian')
+	ax2.set_xlabel('$ K$',fontsize=20)
+	ax2.set_ylabel('$\Lambda$',fontsize=20)
+	ax2.set_title("B)",loc='left',fontsize=20)
+	ax2.set_title('$R_C/R_0$',loc='right',fontsize=20)
+	ax2.set_xscale('log')
+	ax2.set_yscale('log')
+
+	CS = ax2.contour(Klist,Lambdalist,R_C/r0,[0.1,0.2,0.3,0.5,1,2],colors='k')
+	ax2.clabel(CS, inline=1, fontsize=14)
+
+	CS = ax2.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
+	#ax2.text(40,0.0009,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -19)
+	ax2.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
+
+	ax2.minorticks_on()
+	ax2.tick_params(axis='x', labelsize=16)
+	ax2.tick_params(axis='y', labelsize=16)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+Fig10()
 
 

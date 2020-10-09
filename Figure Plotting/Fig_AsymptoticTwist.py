@@ -139,17 +139,16 @@ def PlotPsiInftyMap():
 	plt.clabel(CS,fmt='Cornea (0.31)', inline=1, fontsize=16)
 	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.08],alpha=0.1,colors='grey')
 	
+	plt.title('$\psi_\infty$',loc='right',fontsize=20)
 	plt.xlabel('$K$',fontsize=20)
 	plt.ylabel('$\Lambda$',fontsize=20)
 	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
+	plt.tick_params(axis='x', labelsize=16)
+	plt.tick_params(axis='y', labelsize=16)
 	plt.tight_layout(pad=0.5)
 
 	plt.show()
 
 
 PlotPsiInftyMap()
-
-
 

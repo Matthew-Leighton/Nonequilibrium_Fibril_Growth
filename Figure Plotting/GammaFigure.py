@@ -137,6 +137,11 @@ for j in range(n):
     for i in range(n):
     	if i<2 and j<5:
     		gamma_0[i,j]=np.NaN
+for j in range(n):
+    for i in range(n):
+    	if i<1 and j<3:
+    		r0[i,j]=np.NaN
+
 
 def PlotGammaFig():
 
@@ -157,17 +162,49 @@ def PlotGammaFig():
 	#plt.clabel(CS,fmt='Cornea (0.31)', inline=1, fontsize=16)
 	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.08],alpha=0.1,colors='grey')
 	
+	plt.title('$\gamma_0$',loc='right',fontsize=20)
 	plt.xlabel('$K$',fontsize=20)
 	plt.ylabel('$\Lambda$',fontsize=20)
 	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=14)
-	plt.tick_params(axis='y', labelsize=14)
+	plt.tick_params(axis='x', labelsize=16)
+	plt.tick_params(axis='y', labelsize=16)
+	plt.tight_layout(pad=0.5)
+
+	plt.show()
+
+PlotGammaFig()
+
+def PlotR0():
+
+	plt.ylim(0.001,100)
+	plt.xlim(1,1000)
+	plt.xscale('log')
+	plt.yscale('log') 
+	CS = plt.contour(Klist,Lambdalist,r0,[0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10,20,50],colors='k')
+	plt.clabel(CS, inline=1, fontsize=12)
+
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.09],colors='blue',linewidths=7,alpha=0.5)
+	#plt.clabel(CS,fmt='Tendon (0.09)', inline=1, fontsize=16)
+
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.31,10],alpha=0.5,colors='orange')
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.01,0.09],alpha=0.5,colors='lightblue')
+	plt.contourf(Klist,Lambdalist,finaltwist,[0.09,0.31],alpha=0.1,colors='grey')
+	CS = plt.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=7)
+	#plt.clabel(CS,fmt='Cornea (0.31)', inline=1, fontsize=16)
+	#plt.contourf(np.log10(Klist),np.log10(Lambdalist),finaltwist,[0.01,0.08],alpha=0.1,colors='grey')
+	
+	plt.title('$R_0$',loc='right',fontsize=20)
+	plt.xlabel('$K$',fontsize=20)
+	plt.ylabel('$\Lambda$',fontsize=20)
+	plt.minorticks_on()
+	plt.tick_params(axis='x', labelsize=16)
+	plt.tick_params(axis='y', labelsize=16)
 	plt.tight_layout(pad=0.5)
 
 	plt.show()
 
 
-PlotGammaFig()
+#PlotR0()
 
 
 

@@ -115,6 +115,7 @@ rmax_restricted = np.zeros((n,n))
 psirmax_restricted = np.zeros((n,n))
 K_matrix = np.zeros((n,n))
 twopi_eta_C=np.zeros((n,n))
+f_r0 = np.zeros((n,n))
 
 minloc = np.zeros((n,n))
 minmag = np.zeros((n,n))
@@ -157,6 +158,7 @@ for j in range(n):
             psi_rmax[i,j]=np.NaN
             fprime_r0[i,j] = np.NaN
             rmax[i,j] = np.NaN
+            f_r0[i,j] = np.NaN
         else:
             r0[i,j] = gr[r0loc]
             finaltwist[i,j] = psi[-1]
@@ -165,6 +167,7 @@ for j in range(n):
             psi_rmax[i,j] = psi[rmaxloc]
             fprime_r0[i,j] = fprime[r0loc]
             rmax[i,j] = gr[rmaxloc]
+            f_r0[i,j] = f[r0loc] + gamma/gr[r0loc]
 
 
 
@@ -338,7 +341,7 @@ def PlotData():
     ax1.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
     #ax1.legend(loc='best')
 
-    CS = ax1.contour(Klist,Lambdalist,K33,[0.4,0.8,1,1.2,1.4],colors='k')
+    CS = ax1.contour(Klist,Lambdalist,K33,[0.4,0.8,1,1.2,1.35],colors='k')
     ax1.clabel(CS, inline=1, fontsize=14)
 
 
@@ -367,7 +370,7 @@ def PlotData():
     ax3.set_title('$k_{24}^C$',loc='right',fontsize=20)
     ax3.tick_params(axis='x', labelsize=14)
     ax3.tick_params(axis='y', labelsize=14)
-    CS = ax3.contour(Klist,Lambdalist,k_24_lower,colors='k')#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
+    CS = ax3.contour(Klist,Lambdalist,k_24_lower,[0.8,0.84,0.88,0.92,0.96,0.98,0.99],colors='k')#,[-1.5,-1,-0.5,-0.2,-0.1,-0.01],colors='k')
     ax3.clabel(CS, inline=1, fontsize=14)
 
     CS = ax3.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
@@ -380,14 +383,14 @@ def PlotData():
     ax4.set_ylabel('$\Lambda$',fontsize=20)
     ax4.set_xlabel('$K$',fontsize=20)
     ax4.set_title('D)',loc='left',fontsize=16)
-    ax4.set_title('$\\tilde{R}_C/R_C$',loc='right',fontsize=20)
+    ax4.set_title('$\\tilde{R}_C/R_C$ (nm)',loc='right',fontsize=20)
     ax4.tick_params(axis='x', labelsize=14)
     ax4.tick_params(axis='y', labelsize=14)
     CS = ax4.contour(Klist,Lambdalist,finaltwist,[0.31],colors='xkcd:orange',linewidths=3)
     #ax4.text(30,0.006,'$\psi_\infty \leq 0.31$',fontsize=20,rotation = -38)
     ax4.contourf(Klist,Lambdalist,finaltwist,[0.31,0.7],alpha=0.5,colors='orange')
 
-    CS = ax4.contour(Klist,Lambdalist,X,colors='k')
+    CS = ax4.contour(Klist,Lambdalist,X,[1,2.5,5,7.5,10,12.5],colors='k')
     ax4.clabel(CS, inline=1, fontsize=14)
 
 

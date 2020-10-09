@@ -231,8 +231,8 @@ def ComputeData_Concentration(gr):
 
 
 def ComputeData_Omega(gr):
-	N = 30
-	omegalist = np.logspace(-2,0,num=N)
+	N = 60
+	omegalist = np.logspace(-2,2,num=N)
 	Lambdalist = np.logspace(-3,2,num=N)
 	K=10
 	gamma=0.01

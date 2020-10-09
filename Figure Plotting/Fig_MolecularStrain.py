@@ -41,18 +41,18 @@ def PlotMolecularStrain(gr,psi,etalist,deltalist):
 	plt.plot(gr,molecularstrain*100,label='$R \geq R_0$',lw=3,color='blue')
 	plt.plot(gr[:330],molecularstrainsmall*100,label='$R \leq R_0$',lw=3,color='xkcd:orange',ls='-.')
 
-	plt.xlabel('$r$',fontsize=20)
-	plt.ylabel('Molecular Strain (\%)',fontsize=20)
+	plt.xlabel('$r$',fontsize=26)
+	plt.ylabel('Molecular Strain (\%)',fontsize=18)
 	plt.xscale('log')
-	plt.xlim(0.01,1200)
+	plt.xlim(0.01,1300)
 	plt.ylim(-1.0,0.2)
 	plt.scatter(1000,molecularstrain[-1]*100,marker='o',s=200,color='blue')
 	plt.scatter(gr[330],molecularstrainsmall[-1]*100,marker='o',s=200,color='xkcd:orange')
 	plt.scatter(gr[np.where(deltalist == min(deltalist))], -0.97,marker='v',color='red',s=200)
 
 	plt.minorticks_on()
-	plt.tick_params(axis='x', labelsize=16)
-	plt.tick_params(axis='y', labelsize=16)
+	plt.tick_params(axis='x', labelsize=17)
+	plt.tick_params(axis='y', labelsize=17)
 	plt.tight_layout(pad=0.5)
 	plt.legend(loc='best',fontsize=20)
 
