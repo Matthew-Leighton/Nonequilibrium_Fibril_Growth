@@ -38,7 +38,7 @@ def PlotMolecularStrain(gr,psi,etalist,deltalist):
 	molecularstrain = ((2*np.pi/etalist[-1] - np.cos(psi))/np.cos(psi))
 	molecularstrainsmall = ((2*np.pi/etalist[330] - np.cos(psi[:330]))/np.cos(psi[:330]))
 
-	plt.plot(gr,molecularstrain*100,label='$R \geq R_0$',lw=3,color='blue')
+	plt.plot(gr,molecularstrain*100,label='$R >R_0$',lw=3,color='blue')
 	plt.plot(gr[:330],molecularstrainsmall*100,label='$R \leq R_0$',lw=3,color='xkcd:orange',ls='-.')
 
 	plt.xlabel('$r$',fontsize=26)
