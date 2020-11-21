@@ -17,20 +17,44 @@ rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
 rc('text', usetex=True)
 
 
+# This file contains several key functions for computing nonequilibrium cross-linked fibril structure.
+
+# CalculateStructure() takes in an array of r values (gr) and a set of parameters K, Lambda, and omega.
+	# The function returns the structure psi(r), delta(r), and eta(r)
+
+# CalculateStructure_2() does the same thing but faster using a different algorithm.
+
+# CalculateFreeEnergy() takes as inputs the four dimensionless parameters K, Lambda, omega, and gamma as well as an array of r values and the three structure arrays returned by either of the structure calculation fucntions.
+	# The function returns an array for the surface free energy density f(r)
+
+# FreeEnergy_noD() takes in arrays of r values and psi values along with the dimensionless parameters K and gamma, and returns the free energy density in the Lambda=omega=0 limit
+
+
+
+
 ### Functions used by other functions
 
+# Function to be solved for psi
+#    inputs are the constants K and Lambda, a trial value of psi, an r value (gr), and the quantities delta(r) and eta(r)
 def F(psi,gr,K,Lambda,delta,eta):
     return np.abs(gr - (1/2)*np.sin(2*psi) - K*np.tan(2*psi)*np.sin(psi)**2 - Lambda*((4*np.pi**2) - (eta**2) * np.cos(psi)**2)*np.tan(2*psi)*(delta*eta*gr)**2)
 
+# This function returns psi(r)
+#    inputs are the constants K and Lambda, a trial value of psi, an r value (gr), and the quantities delta(r) and eta(r)
 def psifunction(gr,K,deltalist,etalist,Lambda):
     psilist=np.zeros(len(gr))
     for i in range(len(gr)):
         psilist[i] = minimize(F,psilist[i-1],args=(gr[i],K,Lambda,deltalist[i],etalist[i])).x
     return psilist
 
+
+# Function to be solved for psi in the Lambda=0 limit
+#    input is the constant K, a trial value of psi, and an r value (gr)
 def F0(psi,gr,K):
     return gr - (1/2)*np.sin(2*psi) - K*np.tan(2*psi)*np.sin(psi)**2
 
+# This function returns psi(r) in the Lambda=0 limit
+#    input is the constant K, and an array of r values (gr)
 def psi0function(gr,K):
     psilist=np.zeros(len(gr))
 
@@ -100,7 +124,7 @@ def CalculateFreeEnergy(gr,K,Lambda,omega,gamma,psi,deltalist,etalist):
 
 		f[i] = fK[i] + fgamma[i] + fomega[i] + fLambda[i]
 
-	return f,fK,fLambda,fomega,fgamma
+	return f
 
 
 # This function computes the free energy density in the Lambda=0 limit
