@@ -365,12 +365,12 @@ D.~R. Baselt, J.~P. Revel and J.~D. Baldeschwieler, \emph{Biophysical Journal},
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
-\bibitem[rat()]{ratchet}
-Any slow irreversible attachment against the chemical potential gradient due to
-  cross-linking is ignored here.\relax
-\mciteBstWouldAddEndPunctfalse
+\bibitem[Misof \emph{et~al.}(1997)Misof, Rapp, and Fratzl]{Misof:1997}
+K.~K. Misof, G.~G. Rapp and P.~P. Fratzl, \emph{Biophysical Journal}, 1997,
+  \textbf{72}, 1376--1381\relax
+\mciteBstWouldAddEndPuncttrue
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{}{\mcitedefaultseppunct}\relax
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
 \bibitem[Rutenberg \emph{et~al.}(2016)Rutenberg, Brown, and
   Kreplak]{Rutenberg:2016}
@@ -380,13 +380,12 @@ A.~D. Rutenberg, A.~I. Brown and L.~Kreplak, \emph{Physical Biology}, 2016,
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
-\bibitem[De~Sa~Peixoto \emph{et~al.}(2011)De~Sa~Peixoto, Deniset-Besseau,
-  Schanne-Klein, and Mosser]{DeSaPeixoto:2011}
-P.~De~Sa~Peixoto, A.~Deniset-Besseau, M.-C. Schanne-Klein and G.~Mosser,
-  \emph{Soft Matter}, 2011, \textbf{7}, 11203--11210\relax
-\mciteBstWouldAddEndPuncttrue
+\bibitem[rat()]{ratchet}
+Any slow irreversible attachment against the chemical potential gradient due to
+  cross-linking is ignored here.\relax
+\mciteBstWouldAddEndPunctfalse
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+{}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
 \bibitem[Cox \emph{et~al.}(1970)Cox, Farrell, Hart, and Langham]{Cox:1970}
 J.~L. Cox, R.~A. Farrell, R.~W. Hart and M.~E. Langham, \emph{Journal of
@@ -412,7 +411,7 @@ M.~Saito, K.~Marumo, K.~Fujii and N.~Ishioka, \emph{Analytical Biochemistry},
 \EndOfBibitem
 \bibitem[equ()]{equilibrium}
 A fully equilibrium model of fibril structure can exhibit a broad coexistence
-  regime between small and large radius fibrils.\cite{Cameron:2020} In our
+  regime between small and large radius fibrils.\cite{Cameron:2020} In this
   non-equilibrium model a broad range of radii is a non-equilibrium effect, due
   to crude control of fibril growth for $R \gg R_0$.\relax
 \mciteBstWouldAddEndPunctfalse
@@ -522,6 +521,14 @@ G.~Mosser, A.~Anglo, C.~Helary, Y.~Bouligand and M.-M. Giraud-Guille,
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
 \EndOfBibitem
+\bibitem[De~Sa~Peixoto \emph{et~al.}(2011)De~Sa~Peixoto, Deniset-Besseau,
+  Schanne-Klein, and Mosser]{DeSaPeixoto:2011}
+P.~De~Sa~Peixoto, A.~Deniset-Besseau, M.-C. Schanne-Klein and G.~Mosser,
+  \emph{Soft Matter}, 2011, \textbf{7}, 11203--11210\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
 \bibitem[Ker(1981)]{Ker:1981}
 R.~F. Ker, \emph{Journal of Experimental Biology}, 1981, \textbf{93},
   283--302\relax
@@ -553,13 +560,6 @@ K.~E. Kadler, Y.~Hojima and D.~Prockop, \emph{Journal of Biological Chemistry},
 L.~M. Jawerth, M.~Ijavi, M.~Ruer, S.~Saha, M.~Jahnel, A.~A. Hyman,
   F.~J{\"u}licher and E.~Fischer-Friedrich, \emph{Physical Review Letters},
   2018, \textbf{121}, 258101\relax
-\mciteBstWouldAddEndPuncttrue
-\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
-{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
-\EndOfBibitem
-\bibitem[Misof \emph{et~al.}(1997)Misof, Rapp, and Fratzl]{Misof:1997}
-K.~K. Misof, G.~G. Rapp and P.~P. Fratzl, \emph{Biophysical Journal}, 1997,
-  \textbf{72}, 1376--1381\relax
 \mciteBstWouldAddEndPuncttrue
 \mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
 {\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
